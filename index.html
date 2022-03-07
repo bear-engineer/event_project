@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>투두리스트</h1>
+    <input type="text" id="workText" placeholder="할일을 입력해주세요">
+    <input type="button" value="+" id="plus">
+    <ul id="list" style="list-style-type: none;">
+        
+    </ul>
+    <p>오늘 완료한 할 일 : <span id="counting"></span>개</p>
+    <script>
+        let workText = document.querySelector("#workText");
+        let plus = document.querySelector("#plus");
+        let list = document.querySelector("#list");
+        let li = document.createElement("li");
+        let counting = document.querySelector("#counting");
+
+        plus.addEventListener("click",addList);
+
+
+        function addList(){
+            let li = document.createElement("li");
+
+            let check = document.createElement("input");
+            check.type="checkbox";
+
+            check.addEventListener("click",checkColor);
+
+            check.addEventListener("change",listCount);
+
+            let btnX = document.createElement("input");
+            btnX.type = "button";
+            btnX.value = "X";
+
+            let textNow = document.createTextNode(workText.value);
+
+            li.appendChild(check);
+            li.appendChild(textNow);
+            li.appendChild(btnX);
+
+            btnX.addEventListener("click",deleteList);
+
+            list.appendChild(li);
+
+            function checkColor(){
+                if (check.checked==true){
+                    li.style.color="lightgray"
+                }
+                else {
+                    li.style.color="black"
+                }
+            }
+            function listCount(){
+                let count = 0;
+                for(let i of list.children){
+                    if(i.children[0].checked) {
+                	    count++;
+                    }
+                }
+                counting.textContent = count;
+            }
+        }
+
+        function deleteList(e){
+            e.target.parentNode.remove();
+        }
+
+
+    </script>
+</body>
+</html>
